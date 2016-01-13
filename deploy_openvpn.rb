@@ -3,7 +3,11 @@ require 'droplet_kit'
 require './ip_info.rb'
 require './userdata_openvpn.rb'
 require 'pry'
-@token=''
+require 'yaml'
+
+# Initialize configuration variables
+cnf = YAML::load_file(File.join(__dir__, 'config.yml'))
+@token=cnf["do_token"]["admin"]
 systemInfo = {"name" => "openVPN"+rand(1000).to_s, "region" => "nyc3", "size" => "1gb", "image" => "ubuntu-14-04-x64", "user_data" => userdata_openvpn(), "ssh_keys" => ['982252']}
 ip_public = deploy_droplet(systemInfo)
 puts "time to sleep so everything can be generted properly"
